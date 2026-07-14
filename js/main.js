@@ -139,8 +139,23 @@ function validateInputs(){
 
 }
 
-
 function addContact(){
+
+    if(isPhoneExist(contactNumberInput.value, -1)){
+
+        Swal.fire({
+
+            icon:"error",
+
+            title:"Phone Number Already Exists",
+
+            text:"Please enter another phone number."
+
+        });
+
+        return;
+
+    }
 
     var contact={
 
@@ -164,8 +179,7 @@ function addContact(){
 
     };
 
-
-contacts.push(contact);
+    contacts.push(contact);
 
     saveData();
 
@@ -179,7 +193,6 @@ contacts.push(contact);
 
     clearInputs();
 
-
     Swal.fire({
 
         icon:"success",
@@ -191,6 +204,19 @@ contacts.push(contact);
         showConfirmButton:false
 
     });
+
+}
+
+function isPhoneExist(phone, currentI){
+
+    for(var i = 0; i < contacts.length; i++){
+
+        if(contacts[i].phone == phone && i != currentI){
+            clearInputs()
+            return true;
+        }
+    }
+    return false;
 
 }
 function saveData(){
